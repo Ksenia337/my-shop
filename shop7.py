@@ -1,0 +1,47 @@
+import time
+from selenium import webdriver
+driver = webdriver.Chrome()
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+driver.maximize_window()
+driver.get("http://practice.automationtesting.in/")
+shop = driver.find_element_by_xpath("//li[@id='menu-item-40']/a")
+shop.click()
+driver.execute_script("window.scrollBy(0, 300);")
+book1 = driver.find_element_by_xpath("//ul[@class='products masonry-done']/li[4]/a[2]")
+book1.click()
+time.sleep(3)
+cart = driver.find_element_by_class_name("cartcontents")
+cart.click()
+time.sleep(2)
+proceed = driver.find_element_by_class_name("checkout-button.button.alt.wc-forward")
+proceed.click()
+fname = driver.find_element_by_name("billing_first_name")
+fname.send_keys("Abc")
+lname = driver.find_element_by_name("billing_last_name")
+lname.send_keys("Def")
+email = driver.find_element_by_name("billing_email")
+email.send_keys("mail123@mail.ru")
+phone = driver.find_element_by_id("billing_phone")
+phone.send_keys("+35232345698")
+address = driver.find_element_by_id("billing_address_1")
+address.send_keys("Ghjkl 123")
+city = driver.find_element_by_id("billing_city")
+city.send_keys("Lkoijuyh")
+state = driver.find_element_by_id("billing_state")
+state.send_keys("Erfdcvg")
+post = driver.find_element_by_id("billing_postcode")
+post.send_keys("123456")
+driver.execute_script("window.scrollBy(0, 600);")
+time.sleep(2)
+checkpay = driver.find_element_by_id("payment_method_cheque")
+checkpay.click()
+place = driver.find_element_by_id("place_order")
+place.click()
+checktext1 = WebDriverWait(driver, 5).until(
+EC.text_to_be_present_in_element((By.CLASS_NAME, "woocommerce-thankyou-order-received"), "Thank you. Your order has been received."))
+checktext2 = WebDriverWait(driver, 2).until(
+EC.text_to_be_present_in_element((By.XPATH, "//li[@class='method']/strong"), "Check Payments"))
+driver.quit()
